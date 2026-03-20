@@ -13,8 +13,8 @@ export const personal = {
     'I\'m still in college — but the problems I\'ve solved, the systems I\'ve shipped, and the community I\'ve helped build? Those aren\'t student projects.',
   ],
 
-  photoPath: '/images/profile.jpg',
-  photoFallback: '/images/profile.jpg',
+  photoPath: import.meta.env.BASE_URL + 'images/profile.jpg',
+  photoFallback: import.meta.env.BASE_URL + 'images/profile.jpg',
   photoAlt: 'Rovic James Somontina, Builder and Automation Engineer',
 
   workingStyle: [

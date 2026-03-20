@@ -12,7 +12,7 @@ export function EcxiiLogo({ size = 'md' }) {
   return (
     <div style={{ width, height }}>
       <MetallicPaint
-        imageSrc="/ecxii-logo.svg"
+        imageSrc={import.meta.env.BASE_URL + 'ecxii-logo.svg'}
         speed={0.15}
         scale={3}
         brightness={3}
