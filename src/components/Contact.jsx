@@ -54,10 +54,18 @@ export function Contact() {
 
     try {
       setSubmitState('loading');
-      const response = await fetch(import.meta.env.VITE_FORMSPREE_ENDPOINT, {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: '47a84198-132b-4343-9eb7-359e59e676d9',
+          name: formData.name,
+          email: formData.email,
+          subject: `Portfolio Contact: ${formData.name}`,
+          project: formData.project,
+          message: formData.message,
+          from_name: 'Portfolio Contact Form',
+        }),
       });
       if (!response.ok) throw new Error('Submit failed');
       setSubmitState('success');
