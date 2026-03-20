@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+/* ── Taste-Skill Design System ── */
+/* DESIGN_VARIANCE: 8 | MOTION_INTENSITY: 6 | VISUAL_DENSITY: 4 */
+
+@theme {
+  /* Background — off-black zinc palette, never pure #000 */
+  --color-bg-base: #09090b;
+  --color-bg-surface: #18181b;
+  --color-bg-elevated: #27272a;
+
+  /* Text — zinc scale for consistency */
+  --color-text-primary: #fafafa;
+  --color-text-secondary: #a1a1aa;
+  --color-text-caption: #71717a;
+
+  /* Accent — desaturated emerald (no neon, saturation < 80%) */
+  --color-accent-50: #ecfdf5;
+  --color-accent-300: #6ee7b7;
+  --color-accent-400: #34d399;
+  --color-accent-500: #10b981;
+  --color-accent-600: #059669;
+  --color-accent-700: #047857;
+
+  /* Typography — taste-skill approved fonts */
+  --font-heading: 'Outfit', system-ui, sans-serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* ── Section Backgrounds — pure dark, no color tints ── */
+:root {
+  --gradient-hero: #09090b;
+  --gradient-about: #09090b;
+  --gradient-skills: #09090b;
+  --gradient-projects: #09090b;
+  --gradient-contact: #09090b;
+}
+
+/* ── Animations ── */
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── Hide all scrollbars globally ── */
+*::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; }
+
+/* ── Focus Management ── */
+*:focus-visible {
+  outline: 2px solid var(--color-accent-500);
+  outline-offset: 2px;
+}
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Base ── */
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
