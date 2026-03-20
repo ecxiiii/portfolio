@@ -50,6 +50,7 @@ export function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isValid) return;
     localStorage.setItem('contactDraft', JSON.stringify(formData));
 
     try {
@@ -62,14 +63,18 @@ export function Contact() {
           name: formData.name,
           email: formData.email,
           subject: `Portfolio Contact: ${formData.name}`,
-          project: formData.project,
+          project: formData.project || 'Not specified',
           message: formData.message,
           from_name: 'Portfolio Contact Form',
         }),
       });
-      if (!response.ok) throw new Error('Submit failed');
-      setSubmitState('success');
-      localStorage.removeItem('contactDraft');
+      const data = await response.json();
+      if (data.success) {
+        setSubmitState('success');
+        localStorage.removeItem('contactDraft');
+      } else {
+        throw new Error(data.message || 'Submit failed');
+      }
     } catch {
       setSubmitState('error');
     }
