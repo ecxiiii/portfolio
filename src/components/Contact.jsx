@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { SectionWrapper } from '../helpers/SectionWrapper';
 import { AnimateOnScroll } from '../helpers/AnimateOnScroll';
 import { socials } from '../data/socials';
-import { Check, SpinnerGap, LinkedinLogo, DiscordLogo, FacebookLogo, Briefcase } from '@phosphor-icons/react';
+import { Check, SpinnerGap, LinkedinLogo, DiscordLogo, FacebookLogo, Briefcase, CalendarCheck } from '@phosphor-icons/react';
+import { personal } from '../data/personal';
 
 const iconMap = {
   linkedin: LinkedinLogo,
@@ -113,9 +114,32 @@ export function Contact() {
         <h2 className="font-heading text-2xl md:text-3xl font-bold text-text-primary mb-3 text-center">
           Let's Build Something Together
         </h2>
-        <p className="text-text-secondary text-center mb-10 max-w-[480px] mx-auto">
+        <p className="text-text-secondary text-center mb-8 max-w-[480px] mx-auto">
           Have a project in mind? I'd love to hear about it. Reach out through any channel that works for you.
         </p>
+
+        {/* Schedule a meeting CTA */}
+        <a
+          href={personal.calLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cursor-target group flex items-center gap-4 max-w-[480px] mx-auto mb-8 p-4 rounded-2xl border border-white/[0.08] bg-white/[0.03] hover:border-accent-500/30 hover:bg-accent-500/[0.04] transition-all"
+        >
+          <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-accent-500/10 flex items-center justify-center">
+            <CalendarCheck size={20} weight="duotone" className="text-accent-400" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-medium text-text-primary">Schedule a meeting with Rovic</p>
+            <p className="text-xs text-text-caption">Pick a time that works for you — powered by Cal.com</p>
+          </div>
+          <span className="text-text-caption group-hover:text-accent-400 transition-colors text-sm">→</span>
+        </a>
+
+        <div className="flex items-center gap-3 max-w-[480px] mx-auto mb-8">
+          <div className="flex-1 h-px bg-white/[0.06]" />
+          <span className="text-xs text-text-caption font-mono tracking-wider">OR MESSAGE ME</span>
+          <div className="flex-1 h-px bg-white/[0.06]" />
+        </div>
 
         <div aria-live="polite">
           {submitState === 'error' && (
