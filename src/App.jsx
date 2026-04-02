@@ -5,6 +5,7 @@ import { Skills } from './components/Skills';
 import { Projects } from './components/Projects';
 import { Testimonials } from './components/Testimonials';
 import { Contact } from './components/Contact';
+import { Chatbot } from './components/Chatbot';
 import { Footer } from './components/Footer';
 import { HireBadge } from './components/HireBadge';
 import { TargetCursor } from './components/TargetCursor';
@@ -43,6 +44,10 @@ export function App() {
 
         <SectionReveal>
           <Contact />
+        </SectionReveal>
+
+        <SectionReveal>
+          <Chatbot />
         </SectionReveal>
       </main>
 
