@@ -72,22 +72,22 @@ function ChatMessage({ message, isLatest }) {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={spring}
-      className={`flex gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
+      className={`flex gap-2 sm:gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
     >
       {/* Avatar */}
       <div
-        className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs ${
+        className={`flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-xs ${
           isUser
             ? 'bg-accent-500/20 text-accent-400'
             : 'bg-white/[0.08] text-text-secondary'
         }`}
       >
-        {isUser ? <User size={14} weight="bold" /> : <Robot size={14} weight="bold" />}
+        {isUser ? <User size={12} weight="bold" className="sm:[font-size:14px]" /> : <Robot size={12} weight="bold" className="sm:[font-size:14px]" />}
       </div>
 
       {/* Bubble */}
       <div
-        className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
+        className={`max-w-[85%] sm:max-w-[80%] px-3 py-2 sm:px-4 sm:py-2.5 rounded-2xl text-[13px] sm:text-sm leading-relaxed break-words ${
           isUser
             ? 'bg-accent-500/15 text-text-primary rounded-br-md'
             : 'bg-white/[0.06] text-text-secondary border border-white/[0.06] rounded-bl-md'
@@ -152,10 +152,10 @@ export function Chatbot() {
           Authorization: `Bearer ${OPENROUTER_KEY}`,
         },
         body: JSON.stringify({
-          model: 'openrouter/auto',
+          model: 'openrouter/free',
           messages: apiMessages,
           stream: true,
-          max_tokens: 400,
+          max_tokens: 800,
         }),
       });
 
@@ -166,6 +166,7 @@ export function Chatbot() {
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let assistantContent = '';
+      let buffer = '';
 
       setMessages((prev) => [...prev, { role: 'assistant', content: '' }]);
 
@@ -173,11 +174,16 @@ export function Chatbot() {
         const { done, value } = await reader.read();
         if (done) break;
 
-        const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split('\n').filter((line) => line.startsWith('data: '));
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
 
         for (const line of lines) {
-          const data = line.slice(6);
+          const trimmed = line.trim();
+          if (!trimmed || trimmed.startsWith(':')) continue;
+          if (!trimmed.startsWith('data: ')) continue;
+
+          const data = trimmed.slice(6);
           if (data === '[DONE]') break;
 
           try {
@@ -241,14 +247,14 @@ export function Chatbot() {
 
         {/* Chat container */}
         <div className="max-w-[600px] mx-auto">
-          <div className="rounded-2xl border border-white/[0.08] bg-bg-surface/50 backdrop-blur-sm overflow-hidden">
+          <div className="relative rounded-2xl border border-white/[0.08] bg-bg-surface/50 backdrop-blur-sm overflow-hidden">
             {/* Header */}
-            <div className="flex items-center gap-3 px-5 py-3.5 border-b border-white/[0.06]">
-              <div className="w-8 h-8 rounded-full bg-accent-500/15 flex items-center justify-center">
-                <Robot size={16} weight="duotone" className="text-accent-400" />
+            <div className="flex items-center gap-2.5 px-3 py-3 sm:px-5 sm:py-3.5 border-b border-white/[0.06]">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-accent-500/15 flex items-center justify-center flex-shrink-0">
+                <Robot size={14} weight="duotone" className="text-accent-400 sm:[font-size:16px]" />
               </div>
-              <div>
-                <p className="text-sm font-medium text-text-primary">Rovic's Assistant</p>
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-text-primary truncate">Rovic's Assistant</p>
                 <p className="text-xs text-text-caption">
                   {isStreaming ? (
                     <span className="text-accent-400">typing...</span>
@@ -257,16 +263,16 @@ export function Chatbot() {
                   )}
                 </p>
               </div>
-              <div className="ml-auto flex items-center gap-1.5">
+              <div className="ml-auto flex items-center gap-1.5 flex-shrink-0">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-[statusPulse_2s_ease-in-out_infinite]" />
-                <span className="text-xs text-text-caption">Active</span>
+                <span className="text-xs text-text-caption hidden sm:inline">Active</span>
               </div>
             </div>
 
             {/* Messages */}
             <div
               ref={chatContainerRef}
-              className="relative h-[400px] overflow-y-auto p-5 flex flex-col gap-4 scroll-smooth"
+              className="relative h-[280px] sm:h-[360px] md:h-[400px] overflow-y-auto p-3 sm:p-5 flex flex-col gap-3 sm:gap-4 scroll-smooth"
               role="log"
               aria-label="Chat messages"
               aria-live="polite"
@@ -303,7 +309,7 @@ export function Chatbot() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   onClick={() => scrollToBottom()}
-                  className="absolute bottom-20 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-bg-elevated border border-white/[0.1] flex items-center justify-center text-text-caption hover:text-text-primary transition-colors cursor-pointer"
+                  className="absolute bottom-20 left-1/2 -translate-x-1/2 z-10 w-8 h-8 rounded-full bg-bg-elevated border border-white/[0.1] flex items-center justify-center text-text-caption hover:text-text-primary transition-colors cursor-pointer"
                   aria-label="Scroll to latest message"
                 >
                   <ArrowDown size={14} weight="bold" />
@@ -312,7 +318,7 @@ export function Chatbot() {
             </AnimatePresence>
 
             {/* Input */}
-            <div className="border-t border-white/[0.06] p-3">
+            <div className="border-t border-white/[0.06] p-2.5 sm:p-3">
               <div className="flex items-center gap-2">
                 <input
                   ref={inputRef}
@@ -320,9 +326,9 @@ export function Chatbot() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Ask about Rovic's skills, projects, experience..."
+                  placeholder="Ask about Rovic..."
                   disabled={isStreaming}
-                  className="flex-1 bg-white/[0.04] border border-white/[0.06] rounded-xl px-4 py-2.5 text-sm text-text-primary placeholder:text-text-caption outline-none focus:border-accent-500/30 transition-colors disabled:opacity-50"
+                  className="flex-1 min-w-0 bg-white/[0.04] border border-white/[0.06] rounded-xl px-3 py-2.5 sm:px-4 text-sm text-text-primary placeholder:text-text-caption outline-none focus:border-accent-500/30 transition-colors disabled:opacity-50"
                   aria-label="Type your message"
                 />
                 <button
@@ -339,7 +345,7 @@ export function Chatbot() {
                 </button>
               </div>
               <p className="text-[10px] text-text-caption text-center mt-2 opacity-60">
-                AI assistant — responses are generated, not written by Rovic directly
+                AI-generated responses, not written by Rovic directly
               </p>
             </div>
           </div>

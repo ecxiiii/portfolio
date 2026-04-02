@@ -27,6 +27,10 @@ export function App() {
         </SectionReveal>
 
         <SectionReveal>
+          <Chatbot />
+        </SectionReveal>
+
+        <SectionReveal>
           <About />
         </SectionReveal>
 
@@ -44,10 +48,6 @@ export function App() {
 
         <SectionReveal>
           <Contact />
-        </SectionReveal>
-
-        <SectionReveal>
-          <Chatbot />
         </SectionReveal>
       </main>
 
