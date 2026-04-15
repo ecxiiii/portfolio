@@ -1,7 +1,7 @@
 import { Hero } from './components/Hero';
 import { Navbar } from './components/Navbar';
 import { About } from './components/About';
-import { Skills } from './components/Skills';
+import { Keyboard } from './components/Keyboard';
 import { Projects } from './components/Projects';
 import { Testimonials } from './components/Testimonials';
 import { Contact } from './components/Contact';
@@ -26,17 +26,13 @@ export function App() {
           <Hero />
         </SectionReveal>
 
-        <SectionReveal>
-          <Chatbot />
-        </SectionReveal>
+        <Chatbot />
 
         <SectionReveal>
           <About />
         </SectionReveal>
 
-        <SectionReveal>
-          <Skills />
-        </SectionReveal>
+        <Keyboard />
 
         <SectionReveal>
           <Projects />

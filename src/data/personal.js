@@ -3,7 +3,7 @@ export const personal = {
   tagline: 'Builder & Automation Engineer',
   subtitle: 'From reverse-engineering platforms to shipping automation pipelines — I figure it out, then I build it.',
   resumePath: 'https://pdflink.to/cc692495/',
-  calLink: 'https://cal.com/rovic', // Replace with your actual Cal.com link
+  calLink: 'https://cal.com/ecxiiii',
   availability: true,
 
   bio: [

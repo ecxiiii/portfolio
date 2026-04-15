@@ -2,15 +2,15 @@ import { useState, useEffect, useRef } from 'react';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 import { EcxiiLogo } from './EcxiiLogo';
 
-const SECTION_IDS = ['hero', 'about', 'skills', 'projects', 'contact', 'chatbot'];
+const SECTION_IDS = ['hero', 'chatbot', 'about', 'skills', 'projects', 'contact'];
 
 const NAV_LINKS = [
   { id: 'hero', label: 'Home' },
+  { id: 'chatbot', label: 'Chat' },
   { id: 'about', label: 'About' },
   { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
   { id: 'contact', label: 'Contact' },
-  { id: 'chatbot', label: 'Chat' },
 ];
 
 export function Navbar() {
